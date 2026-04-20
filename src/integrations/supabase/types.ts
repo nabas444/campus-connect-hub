@@ -14,6 +14,113 @@ export type Database = {
   }
   public: {
     Tables: {
+      deliverables: {
+        Row: {
+          created_at: string
+          file_name: string
+          file_size: number
+          id: string
+          milestone_id: string
+          mime_type: string | null
+          note: string | null
+          project_id: string
+          storage_path: string
+          uploaded_by: string
+        }
+        Insert: {
+          created_at?: string
+          file_name: string
+          file_size: number
+          id?: string
+          milestone_id: string
+          mime_type?: string | null
+          note?: string | null
+          project_id: string
+          storage_path: string
+          uploaded_by: string
+        }
+        Update: {
+          created_at?: string
+          file_name?: string
+          file_size?: number
+          id?: string
+          milestone_id?: string
+          mime_type?: string | null
+          note?: string | null
+          project_id?: string
+          storage_path?: string
+          uploaded_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deliverables_milestone_id_fkey"
+            columns: ["milestone_id"]
+            isOneToOne: false
+            referencedRelation: "milestones"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deliverables_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      milestones: {
+        Row: {
+          approved_at: string | null
+          created_at: string
+          description: string | null
+          due_date: string | null
+          id: string
+          position: number
+          price: number | null
+          project_id: string
+          requires_approval: boolean
+          status: Database["public"]["Enums"]["milestone_status"]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          approved_at?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          position?: number
+          price?: number | null
+          project_id: string
+          requires_approval?: boolean
+          status?: Database["public"]["Enums"]["milestone_status"]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          approved_at?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          position?: number
+          price?: number | null
+          project_id?: string
+          requires_approval?: boolean
+          status?: Database["public"]["Enums"]["milestone_status"]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "milestones_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -37,6 +144,102 @@ export type Database = {
           email?: string | null
           full_name?: string | null
           id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      project_events: {
+        Row: {
+          actor_id: string | null
+          created_at: string
+          event_type: Database["public"]["Enums"]["project_event_type"]
+          from_value: string | null
+          id: string
+          message: string | null
+          milestone_id: string | null
+          project_id: string
+          to_value: string | null
+        }
+        Insert: {
+          actor_id?: string | null
+          created_at?: string
+          event_type: Database["public"]["Enums"]["project_event_type"]
+          from_value?: string | null
+          id?: string
+          message?: string | null
+          milestone_id?: string | null
+          project_id: string
+          to_value?: string | null
+        }
+        Update: {
+          actor_id?: string | null
+          created_at?: string
+          event_type?: Database["public"]["Enums"]["project_event_type"]
+          from_value?: string | null
+          id?: string
+          message?: string | null
+          milestone_id?: string | null
+          project_id?: string
+          to_value?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_events_milestone_id_fkey"
+            columns: ["milestone_id"]
+            isOneToOne: false
+            referencedRelation: "milestones"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "project_events_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      projects: {
+        Row: {
+          assigned_expert_id: string | null
+          brief: string
+          completed_at: string | null
+          created_at: string
+          deadline: string | null
+          id: string
+          status: Database["public"]["Enums"]["project_status"]
+          student_id: string
+          subject: string
+          title: string
+          total_budget: number | null
+          updated_at: string
+        }
+        Insert: {
+          assigned_expert_id?: string | null
+          brief: string
+          completed_at?: string | null
+          created_at?: string
+          deadline?: string | null
+          id?: string
+          status?: Database["public"]["Enums"]["project_status"]
+          student_id: string
+          subject: string
+          title: string
+          total_budget?: number | null
+          updated_at?: string
+        }
+        Update: {
+          assigned_expert_id?: string | null
+          brief?: string
+          completed_at?: string | null
+          created_at?: string
+          deadline?: string | null
+          id?: string
+          status?: Database["public"]["Enums"]["project_status"]
+          student_id?: string
+          subject?: string
+          title?: string
+          total_budget?: number | null
           updated_at?: string
         }
         Relationships: []
@@ -194,6 +397,29 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      assign_project: {
+        Args: { _expert_id: string; _project_id: string }
+        Returns: {
+          assigned_expert_id: string | null
+          brief: string
+          completed_at: string | null
+          created_at: string
+          deadline: string | null
+          id: string
+          status: Database["public"]["Enums"]["project_status"]
+          student_id: string
+          subject: string
+          title: string
+          total_budget: number | null
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "projects"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       assign_ticket: {
         Args: { _expert_id: string; _ticket_id: string }
         Returns: {
@@ -217,9 +443,36 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      can_view_project: {
+        Args: { _project_id: string; _user_id: string }
+        Returns: boolean
+      }
       can_view_ticket: {
         Args: { _ticket_id: string; _user_id: string }
         Returns: boolean
+      }
+      claim_project: {
+        Args: { _project_id: string }
+        Returns: {
+          assigned_expert_id: string | null
+          brief: string
+          completed_at: string | null
+          created_at: string
+          deadline: string | null
+          id: string
+          status: Database["public"]["Enums"]["project_status"]
+          student_id: string
+          subject: string
+          title: string
+          total_budget: number | null
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "projects"
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
       claim_ticket: {
         Args: { _ticket_id: string }
@@ -255,9 +508,60 @@ export type Database = {
         }
         Returns: boolean
       }
+      set_milestone_status: {
+        Args: {
+          _milestone_id: string
+          _new_status: Database["public"]["Enums"]["milestone_status"]
+        }
+        Returns: {
+          approved_at: string | null
+          created_at: string
+          description: string | null
+          due_date: string | null
+          id: string
+          position: number
+          price: number | null
+          project_id: string
+          requires_approval: boolean
+          status: Database["public"]["Enums"]["milestone_status"]
+          title: string
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "milestones"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
     }
     Enums: {
       app_role: "student" | "expert" | "admin"
+      milestone_status:
+        | "pending"
+        | "in_progress"
+        | "submitted"
+        | "approved"
+        | "rejected"
+      project_event_type:
+        | "created"
+        | "status_changed"
+        | "assigned"
+        | "unassigned"
+        | "claimed"
+        | "milestone_added"
+        | "milestone_status_changed"
+        | "milestone_approved"
+        | "milestone_rejected"
+        | "deliverable_added"
+        | "commented"
+      project_status:
+        | "draft"
+        | "open"
+        | "in_progress"
+        | "review"
+        | "completed"
+        | "cancelled"
       ticket_category: "hardware" | "software" | "network" | "account" | "other"
       ticket_event_type:
         | "created"
@@ -403,6 +707,34 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["student", "expert", "admin"],
+      milestone_status: [
+        "pending",
+        "in_progress",
+        "submitted",
+        "approved",
+        "rejected",
+      ],
+      project_event_type: [
+        "created",
+        "status_changed",
+        "assigned",
+        "unassigned",
+        "claimed",
+        "milestone_added",
+        "milestone_status_changed",
+        "milestone_approved",
+        "milestone_rejected",
+        "deliverable_added",
+        "commented",
+      ],
+      project_status: [
+        "draft",
+        "open",
+        "in_progress",
+        "review",
+        "completed",
+        "cancelled",
+      ],
       ticket_category: ["hardware", "software", "network", "account", "other"],
       ticket_event_type: [
         "created",
