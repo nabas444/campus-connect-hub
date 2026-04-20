@@ -13,6 +13,8 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import Overview from "./pages/dashboard/Overview";
+import Tickets from "./pages/dashboard/Tickets";
+import TicketDetail from "./pages/dashboard/TicketDetail";
 
 const queryClient = new QueryClient();
 
@@ -37,7 +39,8 @@ const App = () => (
                 }
               >
                 <Route index element={<Overview />} />
-                <Route path="tickets" element={<PlaceholderPage title="Tickets" description="Tech support ticketing system." />} />
+                <Route path="tickets" element={<Tickets />} />
+                <Route path="tickets/:id" element={<TicketDetail />} />
                 <Route path="assignments" element={<PlaceholderPage title="Assignments" description="Academic projects and milestones." />} />
                 <Route path="messages" element={<PlaceholderPage title="Messages" description="Real-time chat with experts." />} />
                 <Route path="billing" element={<PlaceholderPage title="Billing" description="Invoices and payments." />} />
