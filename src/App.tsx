@@ -15,6 +15,8 @@ import NotFound from "./pages/NotFound";
 import Overview from "./pages/dashboard/Overview";
 import Tickets from "./pages/dashboard/Tickets";
 import TicketDetail from "./pages/dashboard/TicketDetail";
+import Projects from "./pages/dashboard/Projects";
+import ProjectDetail from "./pages/dashboard/ProjectDetail";
 
 const queryClient = new QueryClient();
 
