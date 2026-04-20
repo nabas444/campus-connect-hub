@@ -62,7 +62,7 @@ export function NewTicketDialog({ onCreated }: { onCreated?: () => void }) {
     try {
       const { data: ticket, error } = await supabase
         .from("tickets")
-        .insert({ ...parsed.data, student_id: user.id })
+        .insert({ ...parsed.data, student_id: user.id } as any)
         .select()
         .single();
       if (error) throw error;
