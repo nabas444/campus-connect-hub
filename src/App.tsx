@@ -43,7 +43,8 @@ const App = () => (
                 <Route index element={<Overview />} />
                 <Route path="tickets" element={<Tickets />} />
                 <Route path="tickets/:id" element={<TicketDetail />} />
-                <Route path="assignments" element={<PlaceholderPage title="Assignments" description="Academic projects and milestones." />} />
+                <Route path="assignments" element={<Projects />} />
+                <Route path="assignments/:id" element={<ProjectDetail />} />
                 <Route path="messages" element={<PlaceholderPage title="Messages" description="Real-time chat with experts." />} />
                 <Route path="billing" element={<PlaceholderPage title="Billing" description="Invoices and payments." />} />
                 <Route path="reviews" element={<PlaceholderPage title="Reviews" description="Ratings and feedback." />} />
