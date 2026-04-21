@@ -18,6 +18,9 @@ import TicketDetail from "./pages/dashboard/TicketDetail";
 import Projects from "./pages/dashboard/Projects";
 import ProjectDetail from "./pages/dashboard/ProjectDetail";
 import Messages from "./pages/dashboard/Messages";
+import Billing from "./pages/dashboard/Billing";
+import Earnings from "./pages/dashboard/Earnings";
+import AdminPayments from "./pages/dashboard/AdminPayments";
 
 const queryClient = new QueryClient();
 
@@ -47,7 +50,9 @@ const App = () => (
                 <Route path="assignments" element={<Projects />} />
                 <Route path="assignments/:id" element={<ProjectDetail />} />
                 <Route path="messages" element={<Messages />} />
-                <Route path="billing" element={<PlaceholderPage title="Billing" description="Invoices and payments." />} />
+                <Route path="billing" element={<Billing />} />
+                <Route path="earnings" element={<ProtectedRoute allowedRoles={["expert","admin"]}><Earnings /></ProtectedRoute>} />
+                <Route path="payments" element={<ProtectedRoute allowedRoles={["admin"]}><AdminPayments /></ProtectedRoute>} />
                 <Route path="reviews" element={<PlaceholderPage title="Reviews" description="Ratings and feedback." />} />
                 <Route
                   path="users"
