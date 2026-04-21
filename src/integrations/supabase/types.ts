@@ -186,6 +186,130 @@ export type Database = {
           },
         ]
       }
+      expert_earnings: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          expert_id: string
+          id: string
+          milestone_id: string | null
+          payout_id: string | null
+          project_id: string
+          status: Database["public"]["Enums"]["earning_status"]
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency?: string
+          expert_id: string
+          id?: string
+          milestone_id?: string | null
+          payout_id?: string | null
+          project_id: string
+          status?: Database["public"]["Enums"]["earning_status"]
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          expert_id?: string
+          id?: string
+          milestone_id?: string | null
+          payout_id?: string | null
+          project_id?: string
+          status?: Database["public"]["Enums"]["earning_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "expert_earnings_milestone_id_fkey"
+            columns: ["milestone_id"]
+            isOneToOne: true
+            referencedRelation: "milestones"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expert_earnings_payout_id_fkey"
+            columns: ["payout_id"]
+            isOneToOne: false
+            referencedRelation: "payouts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "expert_earnings_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      invoices: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          id: string
+          invoice_number: string
+          issued_at: string | null
+          paid_at: string | null
+          payment_id: string | null
+          pdf_path: string | null
+          project_id: string | null
+          status: Database["public"]["Enums"]["invoice_status"]
+          student_id: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency?: string
+          id?: string
+          invoice_number: string
+          issued_at?: string | null
+          paid_at?: string | null
+          payment_id?: string | null
+          pdf_path?: string | null
+          project_id?: string | null
+          status?: Database["public"]["Enums"]["invoice_status"]
+          student_id: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          invoice_number?: string
+          issued_at?: string | null
+          paid_at?: string | null
+          payment_id?: string | null
+          pdf_path?: string | null
+          project_id?: string | null
+          status?: Database["public"]["Enums"]["invoice_status"]
+          student_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoices_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "invoices_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       milestones: {
         Row: {
           approved_at: string | null
@@ -238,6 +362,101 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          id: string
+          paid_at: string | null
+          project_id: string
+          provider: string
+          provider_reference: string | null
+          status: Database["public"]["Enums"]["payment_status"]
+          student_id: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency?: string
+          id?: string
+          paid_at?: string | null
+          project_id: string
+          provider?: string
+          provider_reference?: string | null
+          status?: Database["public"]["Enums"]["payment_status"]
+          student_id: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          paid_at?: string | null
+          project_id?: string
+          provider?: string
+          provider_reference?: string | null
+          status?: Database["public"]["Enums"]["payment_status"]
+          student_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payouts: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          expert_id: string
+          id: string
+          method: string | null
+          notes: string | null
+          processed_at: string | null
+          processed_by: string | null
+          requested_at: string
+          status: Database["public"]["Enums"]["payout_status"]
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency?: string
+          expert_id: string
+          id?: string
+          method?: string | null
+          notes?: string | null
+          processed_at?: string | null
+          processed_by?: string | null
+          requested_at?: string
+          status?: Database["public"]["Enums"]["payout_status"]
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          expert_id?: string
+          id?: string
+          method?: string | null
+          notes?: string | null
+          processed_at?: string | null
+          processed_by?: string | null
+          requested_at?: string
+          status?: Database["public"]["Enums"]["payout_status"]
+          updated_at?: string
+        }
+        Relationships: []
       }
       profiles: {
         Row: {
@@ -676,12 +895,16 @@ export type Database = {
     }
     Enums: {
       app_role: "student" | "expert" | "admin"
+      earning_status: "pending" | "available" | "paid_out"
+      invoice_status: "draft" | "issued" | "paid" | "void"
       milestone_status:
         | "pending"
         | "in_progress"
         | "submitted"
         | "approved"
         | "rejected"
+      payment_status: "pending" | "paid" | "refunded" | "failed"
+      payout_status: "requested" | "approved" | "paid" | "rejected"
       project_event_type:
         | "created"
         | "status_changed"
@@ -846,6 +1069,8 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["student", "expert", "admin"],
+      earning_status: ["pending", "available", "paid_out"],
+      invoice_status: ["draft", "issued", "paid", "void"],
       milestone_status: [
         "pending",
         "in_progress",
@@ -853,6 +1078,8 @@ export const Constants = {
         "approved",
         "rejected",
       ],
+      payment_status: ["pending", "paid", "refunded", "failed"],
+      payout_status: ["requested", "approved", "paid", "rejected"],
       project_event_type: [
         "created",
         "status_changed",
