@@ -145,10 +145,10 @@ export async function setPaymentStatus(id: string, status: PaymentStatus) {
 }
 
 export async function setPayoutStatus(id: string, status: PayoutStatus) {
-  const patch: Record<string, unknown> = { status };
-  if (status === "paid" || status === "rejected" || status === "approved") {
-    patch.processed_at = new Date().toISOString();
-  }
-  const { error } = await supabase.from("payouts").update(patch).eq("id", id);
+  const processed_at =
+    status === "paid" || status === "rejected" || status === "approved"
+      ? new Date().toISOString()
+      : null;
+  const { error } = await supabase.from("payouts").update({ status, processed_at }).eq("id", id);
   if (error) throw error;
 }
