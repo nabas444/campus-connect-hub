@@ -12,6 +12,8 @@ import {
   Upload, Download, CheckCircle2, XCircle, ChevronRight, FileText,
 } from "lucide-react";
 import { ProjectStatusBadge, MilestoneStatusBadge } from "@/components/projects/StatusBadges";
+import { ChatPanel } from "@/components/chat/ChatPanel";
+import { MessageSquare } from "lucide-react";
 import {
   PROJECT_STATUSES, MILESTONE_STATUSES, formatCurrency, formatDate, timeAgo, formatBytes,
   type ProjectRow, type MilestoneRow, type DeliverableRow, type ProjectEventRow,
@@ -236,6 +238,15 @@ export default function ProjectDetail() {
               ))}
             </ol>
           </Card>
+
+          {(isOwnerStudent || isAssignedExpert || isAdmin) && (
+            <Card className="p-6">
+              <h2 className="font-display font-semibold flex items-center gap-2 mb-3">
+                <MessageSquare className="h-4 w-4" /> Chat
+              </h2>
+              <ChatPanel projectId={project.id} />
+            </Card>
+          )}
         </div>
 
         <div className="space-y-4">

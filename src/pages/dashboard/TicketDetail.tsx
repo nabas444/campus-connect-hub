@@ -7,8 +7,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Loader2, Paperclip, Download, Activity, UserPlus, UserMinus } from "lucide-react";
+import { ArrowLeft, Loader2, Paperclip, Download, Activity, UserPlus, UserMinus, MessageSquare } from "lucide-react";
 import { StatusBadge, PriorityBadge } from "@/components/tickets/StatusBadge";
+import { ChatPanel } from "@/components/chat/ChatPanel";
 import {
   CATEGORY_LABEL, STATUSES, timeAgo, formatBytes,
   type TicketRow, type AttachmentRow, type EventRow, type TicketStatus,
@@ -195,6 +196,15 @@ export default function TicketDetail() {
               ))}
             </ol>
           </Card>
+
+          {(isOwnerStudent || isAssignedExpert || role === "admin") && (
+            <Card className="p-6">
+              <h2 className="font-display font-semibold flex items-center gap-2 mb-3">
+                <MessageSquare className="h-4 w-4" /> Chat
+              </h2>
+              <ChatPanel ticketId={ticket.id} />
+            </Card>
+          )}
         </div>
 
         {/* Sidebar */}
