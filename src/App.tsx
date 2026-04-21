@@ -17,6 +17,7 @@ import Tickets from "./pages/dashboard/Tickets";
 import TicketDetail from "./pages/dashboard/TicketDetail";
 import Projects from "./pages/dashboard/Projects";
 import ProjectDetail from "./pages/dashboard/ProjectDetail";
+import Messages from "./pages/dashboard/Messages";
 
 const queryClient = new QueryClient();
 
@@ -45,7 +46,7 @@ const App = () => (
                 <Route path="tickets/:id" element={<TicketDetail />} />
                 <Route path="assignments" element={<Projects />} />
                 <Route path="assignments/:id" element={<ProjectDetail />} />
-                <Route path="messages" element={<PlaceholderPage title="Messages" description="Real-time chat with experts." />} />
+                <Route path="messages" element={<Messages />} />
                 <Route path="billing" element={<PlaceholderPage title="Billing" description="Invoices and payments." />} />
                 <Route path="reviews" element={<PlaceholderPage title="Reviews" description="Ratings and feedback." />} />
                 <Route
