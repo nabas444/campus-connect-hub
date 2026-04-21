@@ -9,6 +9,8 @@ import {
   BarChart3,
   Settings,
   GraduationCap,
+  Wallet,
+  DollarSign,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import {
@@ -41,13 +43,14 @@ const itemsByRole: Record<AppRole, NavItem[]> = {
     { title: "Assigned tickets", url: "/dashboard/tickets", icon: Ticket },
     { title: "Projects", url: "/dashboard/assignments", icon: BookOpen },
     { title: "Messages", url: "/dashboard/messages", icon: MessagesSquare },
-    { title: "Earnings", url: "/dashboard/billing", icon: CreditCard },
+    { title: "Earnings", url: "/dashboard/earnings", icon: Wallet },
     { title: "Performance", url: "/dashboard/reviews", icon: Star },
   ],
   admin: [
     { title: "Overview", url: "/dashboard", icon: LayoutDashboard },
     { title: "All tickets", url: "/dashboard/tickets", icon: Ticket },
     { title: "All projects", url: "/dashboard/assignments", icon: BookOpen },
+    { title: "Payments", url: "/dashboard/payments", icon: DollarSign },
     { title: "Users", url: "/dashboard/users", icon: Users },
     { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3 },
     { title: "Settings", url: "/dashboard/settings", icon: Settings },
