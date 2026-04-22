@@ -11,6 +11,8 @@ import {
   GraduationCap,
   Wallet,
   DollarSign,
+  UserCircle,
+  Search,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import {
@@ -34,6 +36,7 @@ const itemsByRole: Record<AppRole, NavItem[]> = {
     { title: "Overview", url: "/dashboard", icon: LayoutDashboard },
     { title: "Tech tickets", url: "/dashboard/tickets", icon: Ticket },
     { title: "Assignments", url: "/dashboard/assignments", icon: BookOpen },
+    { title: "Find experts", url: "/dashboard/experts", icon: Search },
     { title: "Messages", url: "/dashboard/messages", icon: MessagesSquare },
     { title: "Billing", url: "/dashboard/billing", icon: CreditCard },
     { title: "Reviews", url: "/dashboard/reviews", icon: Star },
@@ -42,6 +45,7 @@ const itemsByRole: Record<AppRole, NavItem[]> = {
     { title: "Overview", url: "/dashboard", icon: LayoutDashboard },
     { title: "Assigned tickets", url: "/dashboard/tickets", icon: Ticket },
     { title: "Projects", url: "/dashboard/assignments", icon: BookOpen },
+    { title: "My profile", url: "/dashboard/profile", icon: UserCircle },
     { title: "Messages", url: "/dashboard/messages", icon: MessagesSquare },
     { title: "Earnings", url: "/dashboard/earnings", icon: Wallet },
     { title: "Performance", url: "/dashboard/reviews", icon: Star },
@@ -50,6 +54,7 @@ const itemsByRole: Record<AppRole, NavItem[]> = {
     { title: "Overview", url: "/dashboard", icon: LayoutDashboard },
     { title: "All tickets", url: "/dashboard/tickets", icon: Ticket },
     { title: "All projects", url: "/dashboard/assignments", icon: BookOpen },
+    { title: "Experts", url: "/dashboard/experts", icon: Users },
     { title: "Payments", url: "/dashboard/payments", icon: DollarSign },
     { title: "Users", url: "/dashboard/users", icon: Users },
     { title: "Analytics", url: "/dashboard/analytics", icon: BarChart3 },
