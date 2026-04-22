@@ -14,6 +14,11 @@ import {
 import { ProjectStatusBadge, MilestoneStatusBadge } from "@/components/projects/StatusBadges";
 import { ChatPanel } from "@/components/chat/ChatPanel";
 import { MessageSquare } from "lucide-react";
+import { ExpertCard } from "@/components/experts/ExpertCard";
+import { ReviewForm } from "@/components/experts/ReviewForm";
+import { getMyReviewForProject, type ExpertReview } from "@/lib/experts";
+import { Card as ReviewCard, CardContent as ReviewCardContent, CardHeader as ReviewCardHeader, CardTitle as ReviewCardTitle } from "@/components/ui/card";
+import { Star } from "lucide-react";
 import {
   PROJECT_STATUSES, MILESTONE_STATUSES, formatCurrency, formatDate, timeAgo, formatBytes,
   type ProjectRow, type MilestoneRow, type DeliverableRow, type ProjectEventRow,
