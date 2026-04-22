@@ -21,6 +21,9 @@ import Messages from "./pages/dashboard/Messages";
 import Billing from "./pages/dashboard/Billing";
 import Earnings from "./pages/dashboard/Earnings";
 import AdminPayments from "./pages/dashboard/AdminPayments";
+import ExpertDirectory from "./pages/dashboard/ExpertDirectory";
+import ExpertProfileView from "./pages/dashboard/ExpertProfileView";
+import ExpertProfileEdit from "./pages/dashboard/ExpertProfileEdit";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +56,9 @@ const App = () => (
                 <Route path="billing" element={<Billing />} />
                 <Route path="earnings" element={<ProtectedRoute allowedRoles={["expert","admin"]}><Earnings /></ProtectedRoute>} />
                 <Route path="payments" element={<ProtectedRoute allowedRoles={["admin"]}><AdminPayments /></ProtectedRoute>} />
+                <Route path="experts" element={<ExpertDirectory />} />
+                <Route path="experts/:id" element={<ExpertProfileView />} />
+                <Route path="profile" element={<ProtectedRoute allowedRoles={["expert","admin"]}><ExpertProfileEdit /></ProtectedRoute>} />
                 <Route path="reviews" element={<PlaceholderPage title="Reviews" description="Ratings and feedback." />} />
                 <Route
                   path="users"

@@ -247,6 +247,87 @@ export type Database = {
           },
         ]
       }
+      expert_profiles: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          created_at: string
+          currency: string
+          expert_id: string
+          headline: string | null
+          hourly_rate: number | null
+          is_available: boolean
+          rating_avg: number
+          rating_count: number
+          subjects: string[]
+          updated_at: string
+          years_experience: number | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          currency?: string
+          expert_id: string
+          headline?: string | null
+          hourly_rate?: number | null
+          is_available?: boolean
+          rating_avg?: number
+          rating_count?: number
+          subjects?: string[]
+          updated_at?: string
+          years_experience?: number | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          created_at?: string
+          currency?: string
+          expert_id?: string
+          headline?: string | null
+          hourly_rate?: number | null
+          is_available?: boolean
+          rating_avg?: number
+          rating_count?: number
+          subjects?: string[]
+          updated_at?: string
+          years_experience?: number | null
+        }
+        Relationships: []
+      }
+      expert_reviews: {
+        Row: {
+          comment: string | null
+          created_at: string
+          expert_id: string
+          id: string
+          project_id: string
+          rating: number
+          reviewer_id: string
+          updated_at: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          expert_id: string
+          id?: string
+          project_id: string
+          rating: number
+          reviewer_id: string
+          updated_at?: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          expert_id?: string
+          id?: string
+          project_id?: string
+          rating?: number
+          reviewer_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       invoices: {
         Row: {
           amount: number

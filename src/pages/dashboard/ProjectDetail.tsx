@@ -14,6 +14,9 @@ import {
 import { ProjectStatusBadge, MilestoneStatusBadge } from "@/components/projects/StatusBadges";
 import { ChatPanel } from "@/components/chat/ChatPanel";
 import { MessageSquare } from "lucide-react";
+import { ExpertCard } from "@/components/experts/ExpertCard";
+import { ReviewForm } from "@/components/experts/ReviewForm";
+import { getMyReviewForProject, type ExpertReview } from "@/lib/experts";
 import {
   PROJECT_STATUSES, MILESTONE_STATUSES, formatCurrency, formatDate, timeAgo, formatBytes,
   type ProjectRow, type MilestoneRow, type DeliverableRow, type ProjectEventRow,
@@ -39,6 +42,7 @@ export default function ProjectDetail() {
   const [experts, setExperts] = useState<Expert[]>([]);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
+  const [myReview, setMyReview] = useState<ExpertReview | null>(null);
 
   const load = async () => {
     if (!id) return;
@@ -68,6 +72,11 @@ export default function ProjectDetail() {
   };
 
   useEffect(() => { load(); /* eslint-disable-next-line */ }, [id]);
+
+  useEffect(() => {
+    if (!user || !project?.id) return;
+    getMyReviewForProject(project.id, user.id).then(setMyReview).catch(() => setMyReview(null));
+  }, [user, project?.id, project?.status]);
 
   useEffect(() => {
     if (role !== "admin") return;
@@ -247,9 +256,29 @@ export default function ProjectDetail() {
               <ChatPanel projectId={project.id} />
             </Card>
           )}
+
+          {project.status === "completed" && project.assigned_expert_id && user && (isOwnerStudent || isAdmin) && (
+            <Card className="p-6">
+              <h2 className="font-display font-semibold mb-3">
+                {myReview ? "Your review" : "Rate this expert"}
+              </h2>
+              <ReviewForm
+                expertId={project.assigned_expert_id}
+                projectId={project.id}
+                reviewerId={user.id}
+                initialRating={myReview?.rating ?? 0}
+                initialComment={myReview?.comment ?? ""}
+                onSubmitted={() => getMyReviewForProject(project.id, user.id).then(setMyReview)}
+              />
+            </Card>
+          )}
         </div>
 
         <div className="space-y-4">
+          {project.assigned_expert_id && (
+            <ExpertCard expertId={project.assigned_expert_id} compact />
+          )}
+
           <Card className="p-5 space-y-4">
             <h3 className="font-display font-semibold">Details</h3>
             <Field label="Status">
