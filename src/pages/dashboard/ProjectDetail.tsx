@@ -259,6 +259,10 @@ export default function ProjectDetail() {
         </div>
 
         <div className="space-y-4">
+          {project.assigned_expert_id && (
+            <ExpertCard expertId={project.assigned_expert_id} compact />
+          )}
+
           <Card className="p-5 space-y-4">
             <h3 className="font-display font-semibold">Details</h3>
             <Field label="Status">
