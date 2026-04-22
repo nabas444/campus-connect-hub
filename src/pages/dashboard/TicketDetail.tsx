@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Loader2, Paperclip, Download, Activity, UserPlus, UserMinus, MessageSquare } from "lucide-react";
 import { StatusBadge, PriorityBadge } from "@/components/tickets/StatusBadge";
 import { ChatPanel } from "@/components/chat/ChatPanel";
+import { ExpertCard } from "@/components/experts/ExpertCard";
 import {
   CATEGORY_LABEL, STATUSES, timeAgo, formatBytes,
   type TicketRow, type AttachmentRow, type EventRow, type TicketStatus,
@@ -256,6 +257,10 @@ export default function TicketDetail() {
               </Button>
             )}
           </Card>
+
+          {ticket.assigned_expert_id && (
+            <ExpertCard expertId={ticket.assigned_expert_id} compact />
+          )}
         </div>
       </div>
     </div>
