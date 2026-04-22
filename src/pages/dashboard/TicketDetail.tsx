@@ -256,6 +256,10 @@ export default function TicketDetail() {
               </Button>
             )}
           </Card>
+
+          {ticket.assigned_expert_id && (
+            <ExpertCard expertId={ticket.assigned_expert_id} compact />
+          )}
         </div>
       </div>
     </div>
