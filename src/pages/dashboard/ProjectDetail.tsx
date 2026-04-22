@@ -256,6 +256,22 @@ export default function ProjectDetail() {
               <ChatPanel projectId={project.id} />
             </Card>
           )}
+
+          {project.status === "completed" && project.assigned_expert_id && user && (isOwnerStudent || isAdmin) && (
+            <Card className="p-6">
+              <h2 className="font-display font-semibold mb-3">
+                {myReview ? "Your review" : "Rate this expert"}
+              </h2>
+              <ReviewForm
+                expertId={project.assigned_expert_id}
+                projectId={project.id}
+                reviewerId={user.id}
+                initialRating={myReview?.rating ?? 0}
+                initialComment={myReview?.comment ?? ""}
+                onSubmitted={() => getMyReviewForProject(project.id, user.id).then(setMyReview)}
+              />
+            </Card>
+          )}
         </div>
 
         <div className="space-y-4">
