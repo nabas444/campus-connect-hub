@@ -8,6 +8,7 @@ import { StarRating } from "@/components/experts/StarRating";
 import { Link } from "react-router-dom";
 import { Loader2, Search, Filter } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { supabase } from "@/integrations/supabase/client";
 
 export default function ExpertDirectory() {
   const [experts, setExperts] = useState<ExpertDirectoryEntry[]>([]);
@@ -17,18 +18,30 @@ export default function ExpertDirectory() {
   const [minRating, setMinRating] = useState<string>("0");
 
   useEffect(() => {
-    (async () => {
-      setLoading(true);
+    let active = true;
+    const load = async () => {
       try {
         const data = await listExpertDirectory({
           subject: subject === "all" ? undefined : subject,
           minRating: Number(minRating),
         });
-        setExperts(data);
+        if (active) setExperts(data);
       } finally {
-        setLoading(false);
+        if (active) setLoading(false);
       }
-    })();
+    };
+    setLoading(true);
+    load();
+
+    const channel = supabase
+      .channel("expert-directory")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "expert_profiles" },
+        () => load()
+      )
+      .subscribe();
+    return () => { active = false; supabase.removeChannel(channel); };
   }, [subject, minRating]);
 
   const subjectOptions = useMemo(() => {
