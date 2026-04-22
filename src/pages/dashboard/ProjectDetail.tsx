@@ -42,6 +42,7 @@ export default function ProjectDetail() {
   const [experts, setExperts] = useState<Expert[]>([]);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
+  const [myReview, setMyReview] = useState<ExpertReview | null>(null);
 
   const load = async () => {
     if (!id) return;
@@ -71,6 +72,11 @@ export default function ProjectDetail() {
   };
 
   useEffect(() => { load(); /* eslint-disable-next-line */ }, [id]);
+
+  useEffect(() => {
+    if (!user || !project?.id) return;
+    getMyReviewForProject(project.id, user.id).then(setMyReview).catch(() => setMyReview(null));
+  }, [user, project?.id, project?.status]);
 
   useEffect(() => {
     if (role !== "admin") return;
