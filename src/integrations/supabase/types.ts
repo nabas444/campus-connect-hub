@@ -444,6 +444,48 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          link: string | null
+          project_id: string | null
+          read_at: string | null
+          thread_id: string | null
+          ticket_id: string | null
+          title: string
+          type: Database["public"]["Enums"]["notification_type"]
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          project_id?: string | null
+          read_at?: string | null
+          thread_id?: string | null
+          ticket_id?: string | null
+          title: string
+          type: Database["public"]["Enums"]["notification_type"]
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          link?: string | null
+          project_id?: string | null
+          read_at?: string | null
+          thread_id?: string | null
+          ticket_id?: string | null
+          title?: string
+          type?: Database["public"]["Enums"]["notification_type"]
+          user_id?: string
+        }
+        Relationships: []
+      }
       payments: {
         Row: {
           amount: number
@@ -975,6 +1017,20 @@ export type Database = {
         }
         Returns: boolean
       }
+      mark_all_notifications_read: { Args: never; Returns: undefined }
+      notify: {
+        Args: {
+          _body?: string
+          _link?: string
+          _project_id?: string
+          _thread_id?: string
+          _ticket_id?: string
+          _title: string
+          _type: Database["public"]["Enums"]["notification_type"]
+          _user_id: string
+        }
+        Returns: undefined
+      }
       set_milestone_status: {
         Args: {
           _milestone_id: string
@@ -1012,6 +1068,13 @@ export type Database = {
         | "submitted"
         | "approved"
         | "rejected"
+      notification_type:
+        | "ticket_assigned"
+        | "project_assigned"
+        | "milestone_status"
+        | "new_message"
+        | "new_review"
+        | "payout_status"
       payment_status: "pending" | "paid" | "refunded" | "failed"
       payout_status: "requested" | "approved" | "paid" | "rejected"
       project_event_type:
@@ -1186,6 +1249,14 @@ export const Constants = {
         "submitted",
         "approved",
         "rejected",
+      ],
+      notification_type: [
+        "ticket_assigned",
+        "project_assigned",
+        "milestone_status",
+        "new_message",
+        "new_review",
+        "payout_status",
       ],
       payment_status: ["pending", "paid", "refunded", "failed"],
       payout_status: ["requested", "approved", "paid", "rejected"],
