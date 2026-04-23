@@ -24,6 +24,9 @@ import AdminPayments from "./pages/dashboard/AdminPayments";
 import ExpertDirectory from "./pages/dashboard/ExpertDirectory";
 import ExpertProfileView from "./pages/dashboard/ExpertProfileView";
 import ExpertProfileEdit from "./pages/dashboard/ExpertProfileEdit";
+import AdminUsers from "./pages/dashboard/AdminUsers";
+import AdminAnalytics from "./pages/dashboard/AdminAnalytics";
+import AdminSettings from "./pages/dashboard/AdminSettings";
 
 const queryClient = new QueryClient();
 
@@ -64,7 +67,7 @@ const App = () => (
                   path="users"
                   element={
                     <ProtectedRoute allowedRoles={["admin"]}>
-                      <PlaceholderPage title="Users" description="Manage all platform users." />
+                      <AdminUsers />
                     </ProtectedRoute>
                   }
                 />
@@ -72,7 +75,7 @@ const App = () => (
                   path="analytics"
                   element={
                     <ProtectedRoute allowedRoles={["admin"]}>
-                      <PlaceholderPage title="Analytics" description="Platform-wide insights." />
+                      <AdminAnalytics />
                     </ProtectedRoute>
                   }
                 />
@@ -80,7 +83,7 @@ const App = () => (
                   path="settings"
                   element={
                     <ProtectedRoute allowedRoles={["admin"]}>
-                      <PlaceholderPage title="Settings" description="Platform configuration." />
+                      <AdminSettings />
                     </ProtectedRoute>
                   }
                 />
