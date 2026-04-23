@@ -4,8 +4,9 @@ import { AppSidebar } from "./AppSidebar";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
-import { LogOut, Bell } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { NotificationBell } from "@/components/notifications/NotificationBell";
 
 export function DashboardLayout() {
   const { signOut, user, role } = useAuth();
@@ -24,9 +25,7 @@ export function DashboardLayout() {
                 {role}
               </Badge>
             )}
-            <Button variant="ghost" size="icon" aria-label="Notifications">
-              <Bell className="h-5 w-5" />
-            </Button>
+            <NotificationBell />
             <ThemeToggle />
             <Button variant="ghost" size="sm" onClick={signOut} className="gap-2">
               <LogOut className="h-4 w-4" />
