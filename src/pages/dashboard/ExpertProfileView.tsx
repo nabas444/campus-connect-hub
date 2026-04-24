@@ -7,7 +7,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { StarRating } from "@/components/experts/StarRating";
-import { ArrowLeft, Loader2, Mail, Briefcase } from "lucide-react";
+import { ArrowLeft, Mail, Briefcase } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 import { timeAgo } from "@/lib/projects";
 
 type ReviewerMap = Record<string, { full_name: string | null; email: string | null; avatar_url: string | null }>;
@@ -47,7 +48,64 @@ export default function ExpertProfileView() {
     })();
   }, [id]);
 
-  if (loading) return <Card className="p-12 flex items-center justify-center text-muted-foreground"><Loader2 className="h-5 w-5 animate-spin mr-2" />Loading…</Card>;
+  if (loading) return (
+    <div className="space-y-6">
+      <Skeleton className="h-8 w-20" />
+      <div className="grid lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 space-y-6">
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-start gap-4">
+                <Skeleton className="h-20 w-20 rounded-full" />
+                <div className="flex-1 space-y-2">
+                  <Skeleton className="h-7 w-1/2" />
+                  <Skeleton className="h-4 w-2/3" />
+                  <Skeleton className="h-4 w-32" />
+                </div>
+              </div>
+              <div className="mt-5 space-y-2">
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-11/12" />
+                <Skeleton className="h-4 w-9/12" />
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader><Skeleton className="h-5 w-32" /></CardHeader>
+            <CardContent className="space-y-4">
+              {[0, 1, 2].map((i) => (
+                <div key={i} className="flex gap-3">
+                  <Skeleton className="h-9 w-9 rounded-full" />
+                  <div className="flex-1 space-y-2">
+                    <Skeleton className="h-4 w-40" />
+                    <Skeleton className="h-4 w-full" />
+                  </div>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        </div>
+        <div className="space-y-4">
+          <Card>
+            <CardHeader><Skeleton className="h-5 w-20" /></CardHeader>
+            <CardContent className="space-y-3">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-4 w-32" />
+              <Skeleton className="h-4 w-28" />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader><Skeleton className="h-5 w-24" /></CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap gap-1.5">
+                {[0, 1, 2, 3].map((i) => <Skeleton key={i} className="h-6 w-16" />)}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
   if (!profile) return (
     <Card className="p-12 text-center">
       <p className="font-medium">Expert not found</p>
