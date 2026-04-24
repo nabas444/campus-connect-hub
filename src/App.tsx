@@ -28,6 +28,7 @@ import AdminUsers from "./pages/dashboard/AdminUsers";
 import AdminAnalytics from "./pages/dashboard/AdminAnalytics";
 import AdminSettings from "./pages/dashboard/AdminSettings";
 import Notifications from "./pages/dashboard/Notifications";
+import Reviews from "./pages/dashboard/Reviews";
 
 const queryClient = new QueryClient();
 
@@ -64,7 +65,7 @@ const App = () => (
                 <Route path="experts/:id" element={<ExpertProfileView />} />
                 <Route path="profile" element={<ProtectedRoute allowedRoles={["expert","admin"]}><ExpertProfileEdit /></ProtectedRoute>} />
                 <Route path="notifications" element={<Notifications />} />
-                <Route path="reviews" element={<PlaceholderPage title="Reviews" description="Ratings and feedback." />} />
+                <Route path="reviews" element={<Reviews />} />
                 <Route
                   path="users"
                   element={
