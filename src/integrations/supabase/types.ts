@@ -328,6 +328,48 @@ export type Database = {
         }
         Relationships: []
       }
+      featured_testimonials: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          display_name: string | null
+          id: string
+          is_featured: boolean
+          position: number
+          project_id: string
+          public_excerpt: string | null
+          review_id: string
+          subject_label: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          display_name?: string | null
+          id?: string
+          is_featured?: boolean
+          position?: number
+          project_id: string
+          public_excerpt?: string | null
+          review_id: string
+          subject_label?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          display_name?: string | null
+          id?: string
+          is_featured?: boolean
+          position?: number
+          project_id?: string
+          public_excerpt?: string | null
+          review_id?: string
+          subject_label?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       invoices: {
         Row: {
           amount: number
@@ -875,7 +917,23 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      testimonials_public: {
+        Row: {
+          completed_at: string | null
+          display_name: string | null
+          excerpt: string | null
+          expert_id: string | null
+          expert_name: string | null
+          expert_rating_avg: number | null
+          expert_rating_count: number | null
+          featured_at: string | null
+          id: string | null
+          position: number | null
+          rating: number | null
+          subject: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       admin_set_user_role: {
