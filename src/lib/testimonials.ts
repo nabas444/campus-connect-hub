@@ -45,13 +45,13 @@ export interface EligibleProject {
 }
 
 export async function listPublicTestimonials(): Promise<PublicTestimonial[]> {
-  const { data, error } = await supabase
-    .from("testimonials_public" as any)
+  const { data, error } = await (supabase as any)
+    .from("testimonials_public")
     .select("*")
     .order("position", { ascending: true })
     .order("featured_at", { ascending: false });
   if (error) throw error;
-  return (data ?? []) as PublicTestimonial[];
+  return ((data ?? []) as unknown) as PublicTestimonial[];
 }
 
 export async function listEligibleProjects(): Promise<EligibleProject[]> {
