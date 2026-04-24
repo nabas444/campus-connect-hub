@@ -70,17 +70,6 @@ export default function Overview() {
           </Card>
         ))}
       </div>
-
-      <Card className="p-8 bg-gradient-hero text-primary-foreground border-0 shadow-elegant relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-glow opacity-50" aria-hidden />
-        <div className="relative">
-          <h2 className="font-display text-2xl font-bold">Phase 1 complete 🎉</h2>
-          <p className="mt-2 opacity-90 max-w-2xl">
-            Auth, role-based access, design system, and dashboards are live. Tickets, assignments,
-            real-time chat, payments, AI features, and admin analytics ship in the next phases.
-          </p>
-        </div>
-      </Card>
     </div>
   );
 }
