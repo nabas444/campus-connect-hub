@@ -6,10 +6,10 @@ import { StarRating } from "./StarRating";
 import { Link } from "react-router-dom";
 import { ExpertProfile, getExpertProfile, upsertMyExpertProfile } from "@/lib/experts";
 import { supabase } from "@/integrations/supabase/client";
-import { Loader2 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "@/hooks/use-toast";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface ExpertCardProps {
   expertId: string;
@@ -76,9 +76,23 @@ export function ExpertCard({ expertId, compact }: ExpertCardProps) {
 
   if (loading) {
     return (
-      <Card><CardContent className="p-4 flex items-center gap-2 text-sm text-muted-foreground">
-        <Loader2 className="h-4 w-4 animate-spin" /> Loading expert…
-      </CardContent></Card>
+      <Card>
+        <CardContent className={compact ? "p-4 space-y-3" : "p-5 space-y-3"}>
+          <div className="flex items-start gap-3">
+            <Skeleton className="h-12 w-12 rounded-full" />
+            <div className="flex-1 space-y-2">
+              <Skeleton className="h-4 w-32" />
+              <Skeleton className="h-3 w-48" />
+              <Skeleton className="h-3 w-24" />
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            <Skeleton className="h-5 w-16" />
+            <Skeleton className="h-5 w-20" />
+            <Skeleton className="h-5 w-14" />
+          </div>
+        </CardContent>
+      </Card>
     );
   }
 
