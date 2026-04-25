@@ -7,7 +7,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Loader2, Paperclip, Download, Activity, UserPlus, UserMinus, MessageSquare } from "lucide-react";
+import { ArrowLeft, Loader2, Paperclip, Download, Activity, UserPlus, UserMinus, MessageSquare, Trash2 } from "lucide-react";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription,
+  AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { StatusBadge, PriorityBadge } from "@/components/tickets/StatusBadge";
 import { ChatPanel } from "@/components/chat/ChatPanel";
 import { ExpertCard } from "@/components/experts/ExpertCard";
@@ -124,6 +128,15 @@ export default function TicketDetail() {
     if (error) { toast({ title: "Assign failed", description: error.message, variant: "destructive" }); return; }
     toast({ title: expertId ? "Expert assigned" : "Ticket unassigned" });
     load();
+  };
+
+  const deleteTicket = async () => {
+    setUpdating(true);
+    const { error } = await supabase.from("tickets").delete().eq("id", ticket.id);
+    setUpdating(false);
+    if (error) { toast({ title: "Delete failed", description: error.message, variant: "destructive" }); return; }
+    toast({ title: "Ticket deleted" });
+    navigate("/dashboard/tickets");
   };
 
   const downloadFile = async (a: AttachmentRow) => {
@@ -255,6 +268,27 @@ export default function TicketDetail() {
               <Button variant="outline" className="w-full gap-2" onClick={() => assign(null)} disabled={updating}>
                 <UserMinus className="h-4 w-4" /> Unassign
               </Button>
+            )}
+            {role === "admin" && (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" className="w-full gap-2" disabled={updating}>
+                    <Trash2 className="h-4 w-4" /> Delete ticket
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Delete this ticket?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This permanently removes the ticket, attachments metadata, events, and chat. This cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={deleteTicket}>Delete</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             )}
           </Card>
 

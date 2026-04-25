@@ -9,8 +9,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import {
   ArrowLeft, Loader2, Activity, UserPlus, UserMinus, Calendar, DollarSign,
-  Upload, Download, CheckCircle2, XCircle, ChevronRight, FileText,
+  Upload, Download, CheckCircle2, XCircle, ChevronRight, FileText, Trash2,
 } from "lucide-react";
+import {
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription,
+  AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { ProjectStatusBadge, MilestoneStatusBadge } from "@/components/projects/StatusBadges";
 import { ChatPanel } from "@/components/chat/ChatPanel";
 import { MessageSquare } from "lucide-react";
@@ -138,6 +142,15 @@ export default function ProjectDetail() {
     if (error) return toast({ title: "Assign failed", description: error.message, variant: "destructive" });
     toast({ title: expertId ? "Expert assigned" : "Project unassigned" });
     load();
+  };
+
+  const deleteProject = async () => {
+    setBusy(true);
+    const { error } = await supabase.from("projects").delete().eq("id", project.id);
+    setBusy(false);
+    if (error) return toast({ title: "Delete failed", description: error.message, variant: "destructive" });
+    toast({ title: "Project deleted" });
+    navigate("/dashboard/assignments");
   };
 
   const setMilestoneStatus = async (m: MilestoneRow, s: MilestoneStatus) => {
@@ -318,6 +331,27 @@ export default function ProjectDetail() {
               <Button variant="outline" className="w-full gap-2" onClick={() => assign(null)} disabled={busy}>
                 <UserMinus className="h-4 w-4" /> Unassign
               </Button>
+            )}
+            {isAdmin && (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" className="w-full gap-2" disabled={busy}>
+                    <Trash2 className="h-4 w-4" /> Delete project
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Delete this project?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This permanently removes the project, milestones, deliverable metadata, events, and chat. This cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={deleteProject}>Delete</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             )}
           </Card>
         </div>
