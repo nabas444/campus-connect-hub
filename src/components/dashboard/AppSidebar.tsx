@@ -51,6 +51,7 @@ const itemsByRole: Record<AppRole, NavItem[]> = {
     { title: "Success showcase", url: "/dashboard/showcase", icon: Sparkles },
     { title: "Messages", url: "/dashboard/messages", icon: MessagesSquare },
     { title: "Earnings", url: "/dashboard/earnings", icon: Wallet },
+    { title: "Publish testimonials", url: "/dashboard/testimonials", icon: Star },
     { title: "Performance", url: "/dashboard/reviews", icon: Star },
   ],
   admin: [

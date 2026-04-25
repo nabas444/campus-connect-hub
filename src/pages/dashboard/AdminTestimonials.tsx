@@ -28,7 +28,8 @@ function defaultDisplayName(full: string | null): string {
 }
 
 export default function AdminTestimonials() {
-  const { user } = useAuth();
+  const { user, role } = useAuth();
+  const isExpert = role === "expert";
   const [items, setItems] = useState<EligibleProject[]>([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState<EligibleProject | null>(null);
@@ -106,11 +107,12 @@ export default function AdminTestimonials() {
       <header>
         <h1 className="font-display text-3xl font-bold flex items-center gap-2">
           <Sparkles className="h-7 w-7 text-accent" />
-          Curate testimonials
+          {isExpert ? "Publish your testimonials" : "Curate testimonials"}
         </h1>
         <p className="mt-1 text-muted-foreground max-w-2xl">
-          Pick reviewed, completed projects to feature in the public Success Showcase. Student
-          names are anonymized (e.g. "Sarah K.") and you control the excerpt shown.
+          {isExpert
+            ? "Showcase the projects you delivered successfully. Only your completed, reviewed projects appear here. Student names stay anonymized (e.g. \"Sarah K.\")."
+            : "Pick reviewed, completed projects to feature in the public Success Showcase. Student names are anonymized (e.g. \"Sarah K.\") and you control the excerpt shown."}
         </p>
       </header>
 
