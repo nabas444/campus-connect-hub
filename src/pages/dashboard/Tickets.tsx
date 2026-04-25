@@ -26,7 +26,7 @@ export default function Tickets() {
   const [tickets, setTickets] = useState<TicketRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState<Tab>(role === "student" ? "mine" : role === "expert" ? "mine" : "all");
-  const [status, setStatus] = useState<FilterStatus>("active");
+  const [status, setStatus] = useState<FilterStatus>("all");
   const [category, setCategory] = useState<FilterCategory>("all");
   const [q, setQ] = useState("");
   const [claiming, setClaiming] = useState<string | null>(null);
@@ -121,8 +121,8 @@ export default function Tickets() {
         <Select value={status} onValueChange={(v) => setStatus(v as FilterStatus)}>
           <SelectTrigger className="w-[180px]"><SelectValue /></SelectTrigger>
           <SelectContent>
-            <SelectItem value="active">Active</SelectItem>
             <SelectItem value="all">All statuses</SelectItem>
+            <SelectItem value="active">Active only (hide resolved & closed)</SelectItem>
             {STATUSES.map((s) => <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>)}
           </SelectContent>
         </Select>
