@@ -65,9 +65,7 @@ export default function Overview() {
           Welcome{name ? `, ${name}` : ""}.
         </h1>
         <p className="mt-1 text-muted-foreground">
-          {role === "admin"
-            ? "Platform overview and operational health."
-            : role === "expert"
+          {role === "expert"
             ? "Your active queue and impact at a glance."
             : "Your support requests, assignments, and conversations."}
         </p>
